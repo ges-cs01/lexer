@@ -15,6 +15,7 @@
 | **Estruturas de controle**| A estrutura de controle `if` segue a semântica usual: `if (expressao) statement` ou `if (expressao) statement else statement`. A estrutura de iteração é realizada com `while (expressao) statement`. |
 | **Retorno**               | A declaração de retorno pode retornar um valor ou não. Funções do tipo `void` não devem retornar valores.                                    |
 
+
 # Lexemas, tokens e atributos
 | Lexeme               | Nome do Token | Atributo       |
 |----------------------|---------------|----------------|
