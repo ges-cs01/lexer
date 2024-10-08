@@ -64,10 +64,14 @@
 | `>=`                 | `relop`       | GE             |
 
 
-# Compilação e Execução
+## Compilação e Execução
 
+```
 flex lexer.l
-
+```
+```
 gcc lex.yy.c -o lexer -lfl
-
+```
+```
 ./lexer < input_file.c-
+```
