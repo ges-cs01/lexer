@@ -1,4 +1,6 @@
-# Convenções léxicas de C-
+# Analisador Léxico da Linguagem C-
+
+## Convenções léxicas de C-
 
 | Conceito                  | Descrição                                                                                                                                      |
 |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
@@ -16,7 +18,36 @@
 | **Retorno**               | A declaração de retorno pode retornar um valor ou não. Funções do tipo `void` não devem retornar valores.                                    |
 
 
-# Lexemas, tokens e atributos
+
+## Requisitos do Lexer
+
+### 1. Regras de Tokenização
+- **Tokens a serem reconhecidos**: incluem palavras-chave, identificadores, números e operadores da linguagem C-.
+- **Formato de Saída**: O lexer deve retornar, para cada token identificado, três informações:
+  - **Lexeme**: A cadeia de caracteres que representa o token.
+  - **Nome do Token**: A classificação do token (por exemplo, `if`, `id`, `number`, `relop`).
+  - **Atributo do Token**: Um atributo adicional quando aplicável (por exemplo, ponteiros para a tabela de símbolos para identificadores e constantes).
+
+### 2. Tabela de Símbolos
+- Implementar uma tabela de símbolos para armazenar identificadores e constantes identificadas pelo lexer. A tabela deve permitir o armazenamento eficiente e a recuperação dos valores correspondentes.
+
+### 3. Tratamento de Erros
+- O lexer deve ser capaz de identificar e lidar com erros lexicais. Isso inclui:
+  - Retornar um token de erro especial chamado `ERROR` quando um erro fatal ocorrer.
+  - Lidar com situações como um EOF (fim de arquivo) dentro de comentários, retornando a linha do erro.
+  - Retornar caracteres inválidos como tokens de erro e continuar a análise léxica.
+
+### 4. Funcionalidade Geral
+- O lexer deve ser robusto, não parando no primeiro erro encontrado, mas continuando a análise de toda a entrada.
+- Não deve imprimir mensagens de erro diretamente. Em vez disso, as informações sobre os tokens identificados ou erros devem ser passadas para um parser, que será responsável por imprimir os resultados. O parser, por enquanto, é um programa (e.g., main()) que chama o lexer.
+
+### 5. Testes
+- Criar testes utilizando exemplos da descrição do C- e desenvolver programas adicionais que contenham erros lexicais.
+- Garantir que o lexer funcione corretamente com várias entradas e consiga reportar erros de forma adequada.
+
+
+
+# Exemplo de lexemas, tokens e atributos
 | Lexeme               | Nome do Token | Atributo       |
 |----------------------|---------------|----------------|
 | Qualquer ws          | -             | -              |
