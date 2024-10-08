@@ -67,7 +67,7 @@
 ## Compilação e Execução
 
 ```
-flex lexer.l
+flex lexer2.l
 ```
 ```
 gcc lex.yy.c -o lexer -lfl
