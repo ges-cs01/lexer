@@ -46,8 +46,7 @@
 - Garantir que o lexer funcione corretamente com várias entradas e consiga reportar erros de forma adequada.
 
 
-
-# Exemplo de lexemas, tokens e atributos
+### Exemplo de lexemas, tokens e atributos
 | Lexeme               | Nome do Token | Atributo       |
 |----------------------|---------------|----------------|
 | Qualquer ws          | -             | -              |
