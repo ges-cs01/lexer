@@ -3,7 +3,7 @@
 | Conceito                  | Descrição                                                                                                                                      |
 |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
 | **Palavras-chave**        | As palavras-chave da linguagem são: `else`, `if`, `int`, `return`, `void`, `while`. Todas as palavras-chave são reservadas e devem ser escritas em caixa baixa. |
-| **Símbolos especiais**    | Os símbolos especiais são: `+` `-` `*` `/` `<`  `<=` `>` `>=` `==` `!=` `=` `,` `{` `}` `;` `,` `(` `)` `[` `]` `/*` `*/`                                                                        |
+| **Símbolos especiais**    | Os símbolos especiais são: `+` `-` `*` `/` `<`  `<=` `>` `>=` `==` `!=` `=` `,` `{` `}` `;` `(` `)` `[` `]` `/*` `*/`                                                                        |
 | **Marcadores**            | - **ID =** `letra letra*` <br> - **NUM =** `digito digito*` <br> - **letra =** `a \| .. \| z \| A \| .. \| Z)` <br> - **digito =** `0 \| .. \| 9` |
 | **Diferenciação de caixa**| A linguagem diferencia entre caixa baixa e caixa alta.                                                                                      |
 | **Espaço em branco**      | O espaço em branco é composto por espaços, quebras de linha e tabulações. É ignorado, exceto como separador de IDs, NUMs e palavras-chave.   |
