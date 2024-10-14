@@ -27,7 +27,6 @@ struct Token current_token; // Token atualmente processado
 struct SymbolTable symbol_table; // Tabela de símbolos
 
 void add_to_symbol_table(char* lexeme);
-void print_token(struct Token token);
 void initialize_symbol_table();
 int is_in_symbol_table(char* lexeme);
 
@@ -35,50 +34,47 @@ int is_in_symbol_table(char* lexeme);
 
 %%
 
-"else"       { current_token.type = T_ELSE; strcpy(current_token.lexeme, "else"); print_token(current_token); }
-"if"         { current_token.type = T_IF; strcpy(current_token.lexeme, "if"); print_token(current_token); }
-"int"        { current_token.type = T_INT; strcpy(current_token.lexeme, "int"); print_token(current_token); }
-"return"     { current_token.type = T_RETURN; strcpy(current_token.lexeme, "return"); print_token(current_token); }
-"void"       { current_token.type = T_VOID; strcpy(current_token.lexeme, "void"); print_token(current_token); }
-"while"      { current_token.type = T_WHILE; strcpy(current_token.lexeme, "while"); print_token(current_token); }
+"else"       { current_token.type = T_ELSE; strcpy(current_token.lexeme, "else"); }
+"if"         { current_token.type = T_IF; strcpy(current_token.lexeme, "if"); }
+"int"        { current_token.type = T_INT; strcpy(current_token.lexeme, "int"); }
+"return"     { current_token.type = T_RETURN; strcpy(current_token.lexeme, "return"); }
+"void"       { current_token.type = T_VOID; strcpy(current_token.lexeme, "void"); }
+"while"      { current_token.type = T_WHILE; strcpy(current_token.lexeme, "while"); }
 
-[0-9]+       { current_token.type = T_NUM; strcpy(current_token.lexeme, yytext); add_to_symbol_table(yytext); print_token(current_token); }
+[0-9]+       { current_token.type = T_NUM; strcpy(current_token.lexeme, yytext); add_to_symbol_table(yytext); }
 
-[a-zA-Z_][a-zA-Z0-9_]* { current_token.type = T_ID; strcpy(current_token.lexeme, yytext); add_to_symbol_table(yytext); print_token(current_token); }
+[a-zA-Z_][a-zA-Z0-9_]* { current_token.type = T_ID; strcpy(current_token.lexeme, yytext); add_to_symbol_table(yytext); }
 
-"<="         { current_token.type = T_RELOP; strcpy(current_token.lexeme, "<="); strcpy(current_token.attribute, "LE"); print_token(current_token); }
-">="         { current_token.type = T_RELOP; strcpy(current_token.lexeme, ">="); strcpy(current_token.attribute, "GE"); print_token(current_token); }
-"=="         { current_token.type = T_RELOP; strcpy(current_token.lexeme, "=="); strcpy(current_token.attribute, "EQ"); print_token(current_token); }
-"!="         { current_token.type = T_RELOP; strcpy(current_token.lexeme, "!="); strcpy(current_token.attribute, "NE"); print_token(current_token); }
-"<"          { current_token.type = T_RELOP; strcpy(current_token.lexeme, "<"); strcpy(current_token.attribute, "LT"); print_token(current_token); }
-">"          { current_token.type = T_RELOP; strcpy(current_token.lexeme, ">"); strcpy(current_token.attribute, "GT"); print_token(current_token); }
+"<="         { current_token.type = T_RELOP; strcpy(current_token.lexeme, "<="); strcpy(current_token.attribute, "LE"); }
+">="         { current_token.type = T_RELOP; strcpy(current_token.lexeme, ">="); strcpy(current_token.attribute, "GE"); }
+"=="         { current_token.type = T_RELOP; strcpy(current_token.lexeme, "=="); strcpy(current_token.attribute, "EQ"); }
+"!="         { current_token.type = T_RELOP; strcpy(current_token.lexeme, "!="); strcpy(current_token.attribute, "NE"); }
+"<"          { current_token.type = T_RELOP; strcpy(current_token.lexeme, "<"); strcpy(current_token.attribute, "LT"); }
+">"          { current_token.type = T_RELOP; strcpy(current_token.lexeme, ">"); strcpy(current_token.attribute, "GT"); }
 
-"+"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "+"); print_token(current_token); }
-"-"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "-"); print_token(current_token); }
-"*"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "*"); print_token(current_token); }
-"/"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "/"); print_token(current_token); }
-"="          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "="); print_token(current_token); }
-","          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, ","); print_token(current_token); }
-";"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, ";"); print_token(current_token); }
-"{"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "{"); print_token(current_token); }
-"}"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "}"); print_token(current_token); }
-"("          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "("); print_token(current_token); }
-")"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, ")"); print_token(current_token); }
-"["          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "["); print_token(current_token); }
-"]"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "]"); print_token(current_token); }
+"+"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "+"); }
+"-"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "-"); }
+"*"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "*"); }
+"/"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "/"); }
+"="          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "="); }
+","          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, ","); }
+";"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, ";"); }
+"{"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "{"); }
+"}"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "}"); }
+"("          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "("); }
+")"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, ")"); }
+"["          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "["); }
+"]"          { current_token.type = T_SPECIAL; strcpy(current_token.lexeme, "]"); }
 
 [ \t\n]+     { /* Espaço em branco ignorado */ }
 
 "/*"([^*]|\*+[^*/])*\*+"*/" { /* Ignorar comentários de bloco */ }
 "//".*   { /* Ignorar comentários de linha */ }
 
-
 . { 
     current_token.type = T_ERROR; 
     strcpy(current_token.lexeme, yytext); 
-    print_token(current_token); 
     fprintf(stderr, "Erro: caractere inválido '%s' na linha %d\n", yytext, yylineno); 
-    
 }
 
 %%
@@ -99,16 +95,6 @@ int is_in_symbol_table(char* lexeme) {
     return 0;
 }
 
-void print_token(struct Token token) {
-    const char* token_names[] = { "T_IF", "T_ELSE", "T_INT", "T_RETURN", "T_VOID", "T_WHILE", 
-                                  "T_ID", "T_NUM", "T_RELOP", "T_SPECIAL", "T_ERROR", "T_EOF" };
-    printf("Lexeme: %s, Token Type: %s", token.lexeme, token_names[token.type]);
-    if (token.type == T_RELOP) {
-        printf(", Attribute: %s", token.attribute);
-    }
-    printf("\n");
-}
-
 void initialize_symbol_table() {
     symbol_table.count = 0;
 }
@@ -118,4 +104,3 @@ int main() {
     yylex(); // Inicia o processo de análise léxica
     return 0;
 }
-
