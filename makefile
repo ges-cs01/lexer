@@ -1,52 +1,23 @@
-# Makefile para Compilador Simples com Flex e Bison
+# Makefile para compilar e rodar o lexer
 
-# Compilador e Flags
+LEX = flex
 CC = gcc
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall
+LFLAGS = -lfl
+TARGET = lexer
+LEX_FILE = lexer.l
+INPUT = codigo.c
 
-# Ferramentas
-BISON = bison
-FLEX = flex
+all: $(TARGET)
 
-# Arquivos
-BISON_SRC = parse.y
-FLEX_SRC = lexer.l
-BISON_OUTPUT = parse.tab.c
-BISON_HEADER = parse.tab.h
-FLEX_OUTPUT = lex.yy.c
-EXEC = compilador
+$(TARGET): lex.yy.c
+	$(CC) lex.yy.c -o $(TARGET) $(LFLAGS)
 
-# Objetos
-OBJS = parse.tab.o lex.yy.o
+lex.yy.c: $(LEX_FILE)
+	$(LEX) $(LEX_FILE)
 
-# Regra padrão
-all: $(EXEC)
+run: $(TARGET)
+	./$(TARGET) < $(INPUT)
 
-# Compilação do Executável
-$(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ -lfl
-
-# Compilação do Bison
-$(BISON_OUTPUT) $(BISON_HEADER): $(BISON_SRC)
-	$(BISON) -d $(BISON_SRC)
-
-# Compilação do Flex
-$(FLEX_OUTPUT): $(FLEX_SRC) $(BISON_HEADER)
-	$(FLEX) $(FLEX_SRC)
-
-# Compilação dos Objetos
-parse.tab.o: $(BISON_OUTPUT)
-	$(CC) $(CFLAGS) -c $(BISON_OUTPUT)
-
-lex.yy.o: $(FLEX_OUTPUT)
-	$(CC) $(CFLAGS) -c $(FLEX_OUTPUT)
-
-# Limpeza dos arquivos gerados
 clean:
-	rm -f $(EXEC) $(OBJS) $(BISON_OUTPUT) $(BISON_HEADER) $(FLEX_OUTPUT)
-
-# Regra para reconstruir completamente
-rebuild: clean all
-
-# Informações
-.PHONY: all clean rebuild
+	rm -f lex.yy.c $(TARGET)
