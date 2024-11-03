@@ -1,4 +1,4 @@
-# Analisador Léxico da Linguagem C-
+# Analisador Léxico (Lexer) da Linguagem C-
 
 ## Convenções léxicas de C-
 
@@ -74,3 +74,47 @@ gcc lex.yy.c -o lexer -lfl
 ```
 ./lexer < input_file.c-
 ```
+
+# Analisador Sintático (Parser) da Linguagem C-
+
+## Requisitos do Parser
+- Utilizar o analisador léxico (lexer) pré-existente para a linguagem C-.
+- Construir uma **árvore de sintaxe abstrata (AST)** usando ações semânticas do Bison.
+- A saída do analisador será uma AST contendo os elementos essenciais do programa.
+- Utilizar a descrição da linguagem C- para criar o analisador sintático e gerar a AST.
+
+### 1. Saída do Parser
+- **Para Programas Bem-Sucedidos**:
+   - As ações semânticas do parser devem construir uma **Árvore de Sintaxe Abstrata (AST)** que representa a estrutura do programa analisado.
+   - A **raiz da AST** deve ser exclusivamente do tipo `programa`. A AST é abstrata e contém apenas os elementos essenciais do programa, diferentemente de uma árvore sintática completa, que incluiria todos os detalhes gramaticais.
+   - A saída final do analisador para um programa analisado com sucesso será uma **lista estruturada da AST**, mostrando os elementos e suas hierarquias dentro do programa.
+
+- **Para Programas com Erros**:
+   - Caso o parser encontre construções incorretas no código, ele deverá gerar **mensagens de erro descritivas** que indiquem cada erro identificado.
+   - Para construções que se estendem por várias linhas (por exemplo, uma expressão ou um bloco de código), qualquer linha pertencente à construção pode ser escolhida como ponto de referência para a linha de erro. É recomendável selecionar a linha que melhor representa a localização do problema para facilitar a compreensão do usuário.
+   - Utilizar o pseudo-não terminal `error` do Bison permite ao parser continuar a análise após um erro, gerando uma lista completa de erros, em vez de parar no primeiro erro encontrado.
+
+- **Regras Gerais de Saída**:
+   - A AST gerada deve estar contida em um único arquivo, pois o parser só precisa ser capaz de processar programas em um arquivo de código-fonte.
+   - Para a exibição da AST ou das mensagens de erro, é recomendável seguir um formato consistente, que facilite a leitura e o entendimento dos resultados.
+
+
+### 2. Tratamento de Erros
+
+O tratamento de erros no parser é realizado utilizando o **pseudo-não terminal `error`** do Bison, que permite que o analisador continue a análise mesmo após detectar um erro, possibilitando uma recuperação parcial. Abaixo estão as diretrizes para implementar o tratamento de erros:
+
+- **Uso do `error` para Recuperação**:
+   - O **pseudo-não terminal `error`** permite ao parser antecipar e lidar com erros sintáticos previsíveis, evitando que a análise seja interrompida ao primeiro erro encontrado.
+   - Inserir `error` em pontos estratégicos da gramática ajuda o parser a ignorar tokens problemáticos e a retomar a análise no próximo ponto seguro, permitindo a detecção de múltiplos erros em uma única execução.
+
+- **Limitações do `error`**:
+   - O `error` não é uma solução completa para todos os problemas de recuperação, pois, em algumas situações, o parser pode se confundir completamente e produzir mensagens de erro menos precisas.
+   - Consulte a documentação do Bison para entender os melhores locais para inserir `error` e as práticas recomendadas para recuperação, uma vez que seu uso excessivo ou inadequado pode comprometer a clareza dos erros reportados.
+
+- **Numeração de Linhas nas Mensagens de Erro**:
+   - Não é necessário se preocupar excessivamente com a precisão da numeração das linhas nas mensagens de erro.
+   - Se o parser estiver funcionando corretamente, a linha reportada geralmente será a linha onde o erro ocorreu, mas em construções que se estendem por várias linhas, o número da linha pode ser o da última linha da construção incorreta.
+
+- **Recuperação em Construções Multilinha**:
+ - Para construções erradas que abrangem múltiplas linhas, o parser pode reportar a linha onde o erro foi detectado, mas essa linha geralmente será a última linha da construção.
+   - Esta abordagem facilita a identificação da posição do erro, ainda que a linha exata possa variar em alguns casos.
