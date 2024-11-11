@@ -1,176 +1,139 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-// Declarações das estruturas e funções do lexer
-extern struct Token current_token;
-extern int yylex();
-extern int yyparse();
-extern void yyerror(const char *s);
 
-// Definição da tabela de símbolos
-struct SymbolTable {
-    int count;
-    char* symbols[100]; // Suporte para até 100 símbolos
-};
+// Estrutura para nós da árvore de sintaxe abstrata (AST)
+typedef struct ASTNode {
+    char *type;
+    struct ASTNode *left;
+    struct ASTNode *right;
+    char *value;
+} ASTNode;
 
-// Inicializando a tabela de símbolos
-struct SymbolTable symbol_table;
-
-// Função para inicializar a tabela de símbolos
-void initialize_symbol_table() {
-    symbol_table.count = 0;
+// Função para criar nós da AST
+ASTNode* createNode(char *type, ASTNode *left, ASTNode *right, char *value) {
+    ASTNode *node = (ASTNode*)malloc(sizeof(ASTNode));
+    node->type = type;
+    node->left = left;
+    node->right = right;
+    node->value = value ? strdup(value) : NULL;
+    return node;
 }
 
-// Função para adicionar símbolos à tabela de símbolos
-void add_symbol(const char* symbol) {
-    if (symbol_table.count < 100) {
-        symbol_table.symbols[symbol_table.count] = strdup(symbol);
-        symbol_table.count++;
-    } else {
-        fprintf(stderr, "Tabela de símbolos cheia.\n");
-    }
+// Função para imprimir a AST (pré-ordem)
+void printAST(ASTNode *node, int level) {
+    if (node == NULL) return;
+    for (int i = 0; i < level; i++) printf("  ");
+    printf("%s", node->type);
+    if (node->value) printf(" (%s)", node->value);
+    printf("\n");
+    printAST(node->left, level + 1);
+    printAST(node->right, level + 1);
 }
 
 %}
 
-// Definição de tokens correspondentes aos definidos no lexer
-%token T_IF T_ELSE T_INT T_RETURN T_VOID T_WHILE
-%token T_ID T_NUM T_RELOP T_SPECIAL T_ERROR T_EOF
-
-// Precedência e associatividade (opcional, útil para expressões)
-%left '+' '-'
-%left '*' '/'
-%left T_RELOP
-
-// Tipos de valores associados aos não-terminais
 %union {
-    int num;
-    char* id;
+    ASTNode *node;
+    char *string;
 }
 
-// Associando tokens a tipos no union
-%type <num> T_NUM
-%type <id> T_ID
-%type <num> expression
+%token INT VOID IF ELSE WHILE RETURN ID NUM LE GE EQ NE
+%type <node> programa declaracao_lista declaracao var_declaracao tipo_especificador fun_declaracao
+%type <node> statement_lista statement expressao_decl selecao_decl iteracao_decl retorno_decl
+%type <node> expressao var simples_expressao termo fator ativacao args
 
 %%
+programa: declaracao_lista ;
 
-// Regras de Gramática
+declaracao_lista: declaracao_lista declaracao
+                | declaracao ;
 
-program:
-    declarations
-    ;
+declaracao: var_declaracao
+          | fun_declaracao ;
 
-declarations:
-    declarations declaration
-    | declaration
-    ;
+var_declaracao: tipo_especificador ID ';'
+              | tipo_especificador ID '[' NUM ']' ';' ;
 
-declaration:
-    type_specifier T_ID T_SPECIAL { add_symbol($2); /* Adiciona o identificador à tabela de símbolos */ }
-    | type_specifier T_ID '(' parameters ')' compound_stmt
-    ;
+tipo_especificador: INT
+                  | VOID ;
 
-type_specifier:
-    T_INT
-    | T_VOID
-    ;
+fun_declaracao: tipo_especificador ID '(' params ')' composto_decl ;
 
-parameters:
-    /* Vazio */
-    | parameter_list
-    ;
+params: param_lista
+      | VOID ;
 
-parameter_list:
-    parameter
-    | parameter_list T_SPECIAL parameter
-    ;
+param_lista: param_lista ',' param
+           | param ;
 
-parameter:
-    type_specifier T_ID
-    ;
+param: tipo_especificador ID
+     | tipo_especificador ID '[' ']' ;
 
-compound_stmt:
-    T_SPECIAL /* '{' */
-        declarations
-        statements
-        T_SPECIAL /* '}' */
-    ;
+composto_decl: '{' local_declaracoes statement_lista '}' ;
 
-statements:
-    statements statement
-    | /* Vazio */
-    ;
+local_declaracoes: local_declaracoes var_declaracao
+                 | /* vazio */ ;
 
-statement:
-    expression_stmt
-    | compound_stmt
-    | selection_stmt
-    | iteration_stmt
-    | return_stmt
-    ;
+statement_lista: statement_lista statement
+               | /* vazio */ ;
 
-expression_stmt:
-    expression T_SPECIAL /* ';' */
-    | T_SPECIAL /* ';' */
-    ;
+statement: expressao_decl
+         | composto_decl
+         | selecao_decl
+         | iteracao_decl
+         | retorno_decl ;
 
-selection_stmt:
-    T_IF '(' expression ')' statement
-    | T_IF '(' expression ')' statement T_ELSE statement
-    ;
+expressao_decl: expressao ';'
+              | ';' ;
 
-iteration_stmt:
-    T_WHILE '(' expression ')' statement
-    ;
+selecao_decl: IF '(' expressao ')' statement
+            | IF '(' expressao ')' statement ELSE statement ;
 
-return_stmt:
-    T_RETURN expression T_SPECIAL /* ';' */
-    | T_RETURN T_SPECIAL /* ';' */
-    ;
+iteracao_decl: WHILE '(' expressao ')' statement ;
 
-expression:
-    T_NUM { $$ = $1; }               // Expressão numérica
-    | T_ID { $$ = 0; }               // Identificador (opcionalmente podemos associar a um valor)
-    | expression '+' expression { $$ = $1 + $3; } // Operações aritméticas
-    | expression '-' expression { $$ = $1 - $3; }
-    | expression '*' expression { $$ = $1 * $3; }
-    | expression '/' expression { $$ = $1 / $3; }
-    | expression T_RELOP expression { $$ = $1; } // Operação relacional (ajustar conforme necessário)
-    | '(' expression ')' { $$ = $2; } // Expressão entre parênteses
-    ;
+retorno_decl: RETURN ';'
+            | RETURN expressao ';' ;
+
+expressao: var '=' expressao
+         | simples_expressao ;
+
+var: ID
+   | ID '[' expressao ']' ;
+
+simples_expressao: soma_expressao relacional soma_expressao
+                 | soma_expressao ;
+
+relacional: LE
+           | GE
+           | EQ
+           | NE
+           | '<'
+           | '>';
+
+soma_expressao: soma_expressao soma termo
+              | termo ;
+
+soma: '+'
+    | '-' ;
+
+termo: termo mult fator
+     | fator ;
+
+mult: '*'
+    | '/' ;
+
+fator: '(' expressao ')'
+     | var
+     | ativacao
+     | NUM ;
+
+ativacao: ID '(' args ')' ;
+
+args: arg_lista
+    | /* vazio */ ;
+
+arg_lista: arg_lista ',' expressao
+         | expressao ;
 
 %%
-
-// Função de erro
-void yyerror(const char *s) {
-    fprintf(stderr, "Erro de sintaxe: %s\n", s);
-}
-
-// Função principal
-int main(int argc, char **argv) {
-    if (argc > 1) {
-        FILE *file = fopen(argv[1], "r");
-        if (!file) {
-            perror(argv[1]);
-            return 1;
-        }
-        extern FILE *yyin;
-        yyin = file;
-    }
-    // Inicializa a tabela de símbolos
-    initialize_symbol_table();
-    
-    // Inicia o parsing
-    yyparse();
-    
-    // Opcional: Imprimir a tabela de símbolos após o parsing
-    printf("\nTabela de Símbolos:\n");
-    for(int i = 0; i < symbol_table.count; i++) {
-        printf("%d: %s\n", i, symbol_table.symbols[i]);
-    }
-    
-    return 0;
-}

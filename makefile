@@ -1,23 +1,25 @@
-# Makefile para compilar e rodar o lexer
-
-LEX = flex
+# Compilador e flags
 CC = gcc
-CFLAGS = -Wall
-LFLAGS = -lfl
-TARGET = lexer
-LEX_FILE = lexer.l
-INPUT = codigo.c
+BISON = bison
+FLEX = flex
 
-all: $(TARGET)
+# Arquivos de entrada e saída
+BISON_FILE = parse.y
+LEXER_FILE = lexer.l
+BISON_OUTPUT = parse.tab.c
+LEXER_OUTPUT = lex.yy.c
+EXEC = parser
 
-$(TARGET): lex.yy.c
-	$(CC) lex.yy.c -o $(TARGET) $(LFLAGS)
+all: $(EXEC)
 
-lex.yy.c: $(LEX_FILE)
-	$(LEX) $(LEX_FILE)
+$(EXEC): $(BISON_OUTPUT) $(LEXER_OUTPUT)
+	$(CC) $(BISON_OUTPUT) $(LEXER_OUTPUT) -o $(EXEC) -lfl
 
-run: $(TARGET)
-	./$(TARGET) < $(INPUT)
+$(BISON_OUTPUT): $(BISON_FILE)
+	$(BISON) -d $(BISON_FILE)
+
+$(LEXER_OUTPUT): $(LEXER_FILE)
+	$(FLEX) $(LEXER_FILE)
 
 clean:
-	rm -f lex.yy.c $(TARGET)
+	rm -f $(BISON_OUTPUT) parse.tab.h $(LEXER_OUTPUT) $(EXEC)
