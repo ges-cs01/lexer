@@ -137,3 +137,45 @@ arg_lista: arg_lista ',' expressao
          | expressao ;
 
 %%
+
+void generateCode(ASTNode *node, FILE *output) {
+    if (!node) return;
+
+    if (strcmp(node->type, "NUM") == 0) {
+        fprintf(output, "li $t0, %s\n", node->value);
+    } else if (strcmp(node->type, "ID") == 0) {
+        fprintf(output, "lw $t0, %s\n", node->value);
+    } else if (strcmp(node->type, "ADD") == 0) {
+        generateCode(node->left, output);
+        fprintf(output, "sw $t0, 0($sp)\n");
+        fprintf(output, "addiu $sp, $sp, -4\n");
+        generateCode(node->right, output);
+        fprintf(output, "lw $t1, 4($sp)\n");
+        fprintf(output, "addiu $sp, $sp, 4\n");
+        fprintf(output, "add $t0, $t1, $t0\n");
+    } else if (strcmp(node->type, "SUB") == 0) {
+        generateCode(node->left, output);
+        fprintf(output, "sw $t0, 0($sp)\n");
+        fprintf(output, "addiu $sp, $sp, -4\n");
+        generateCode(node->right, output);
+        fprintf(output, "lw $t1, 4($sp)\n");
+        fprintf(output, "addiu $sp, $sp, 4\n");
+        fprintf(output, "sub $t0, $t1, $t0\n");
+    } else if (strcmp(node->type, "MUL") == 0) {
+        generateCode(node->left, output);
+        fprintf(output, "sw $t0, 0($sp)\n");
+        fprintf(output, "addiu $sp, $sp, -4\n");
+        generateCode(node->right, output);
+        fprintf(output, "lw $t1, 4($sp)\n");
+        fprintf(output, "addiu $sp, $sp, 4\n");
+        fprintf(output, "mul $t0, $t1, $t0\n");
+    } else if (strcmp(node->type, "DIV") == 0) {
+        generateCode(node->left, output);
+        fprintf(output, "sw $t0, 0($sp)\n");
+        fprintf(output, "addiu $sp, $sp, -4\n");
+        generateCode(node->right, output);
+        fprintf(output, "lw $t1, 4($sp)\n");
+        fprintf(output, "addiu $sp, $sp, 4\n");
+        fprintf(output, "div $t0, $t1, $t0\n");
+    }
+}
