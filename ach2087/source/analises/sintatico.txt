@@ -1,0 +1,29 @@
+  Tipo void
+    Funcao main
+      Tipo void
+      Tipo inteiro
+        Variavel i
+      Tipo inteiro
+        Variavel n
+      Atribuicao
+        Id: i
+        Const: 0
+      Atribuicao
+        Id: n
+        Chamada de Funcao input 
+      While
+        Op:  LT  
+          Id: i
+          Const: 10
+        Chamada de Funcao output 
+          Id: n
+        Atribuicao
+          Id: n
+          Op:  MULT  
+            Id: n
+            Const: 2
+        Atribuicao
+          Id: i
+          Op:  PLUS  
+            Const: 1
+            Const: 1

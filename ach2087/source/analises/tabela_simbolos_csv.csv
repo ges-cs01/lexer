@@ -1,0 +1,16 @@
+Nome,Escopo,Tipo_var,Tipo,Tamanho,Ocorrências
+PC_INTERRUPTION,global,inteiro,Função,0,30 
+copy_registers_to_ram,global,inteiro,Função,0,30 
+set_hd_track,global,inteiro,Função,0,30 
+copy_registers_to_bank,global,inteiro,Função,0,30 
+main,global,void,Função,0,1 
+change_context,global,inteiro,Função,0,30 
+input,global,inteiro,Função,0,30 5 
+set_lcd_message,global,inteiro,Função,0,30 
+set_process_bcd,global,inteiro,Função,0,30 
+output,global,inteiro,Função,0,30 8 
+STACK_SIZE,global,inteiro,Função,0,30 
+set_quantum_value,global,inteiro,Função,0,30 
+clean_ram,global,inteiro,Função,0,30 
+i,main,inteiro,Variável,0,2 4 7 10 
+n,main,inteiro,Variável,0,3 5 8 9 9 

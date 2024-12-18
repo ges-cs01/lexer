@@ -35,11 +35,11 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_PARSE_TAB_H_INCLUDED
-# define YY_YY_PARSE_TAB_H_INCLUDED
+#ifndef YY_YY_PARSER_H_INCLUDED
+# define YY_YY_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -54,35 +54,42 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    INT = 258,                     /* INT  */
-    VOID = 259,                    /* VOID  */
+    ASSIGN = 258,                  /* ASSIGN  */
+    ELSE = 259,                    /* ELSE  */
     IF = 260,                      /* IF  */
-    ELSE = 261,                    /* ELSE  */
-    WHILE = 262,                   /* WHILE  */
-    RETURN = 263,                  /* RETURN  */
-    ID = 264,                      /* ID  */
-    NUM = 265,                     /* NUM  */
-    LE = 266,                      /* LE  */
-    GE = 267,                      /* GE  */
-    EQ = 268,                      /* EQ  */
-    NE = 269                       /* NE  */
+    INT = 261,                     /* INT  */
+    RETURN = 262,                  /* RETURN  */
+    VOID = 263,                    /* VOID  */
+    WHILE = 264,                   /* WHILE  */
+    PLUS = 265,                    /* PLUS  */
+    SUB = 266,                     /* SUB  */
+    MULT = 267,                    /* MULT  */
+    DIV = 268,                     /* DIV  */
+    LT = 269,                      /* LT  */
+    LET = 270,                     /* LET  */
+    GT = 271,                      /* GT  */
+    GET = 272,                     /* GET  */
+    COMP = 273,                    /* COMP  */
+    DIF = 274,                     /* DIF  */
+    PV = 275,                      /* PV  */
+    VIR = 276,                     /* VIR  */
+    LPAR = 277,                    /* LPAR  */
+    RPAR = 278,                    /* RPAR  */
+    LCOL = 279,                    /* LCOL  */
+    RCOL = 280,                    /* RCOL  */
+    LCHA = 281,                    /* LCHA  */
+    RCHA = 282,                    /* RCHA  */
+    RESTO = 283,                   /* RESTO  */
+    ID = 284,                      /* ID  */
+    NUM = 285,                     /* NUM  */
+    ERR = 286                      /* ERR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 37 "parse.y"
-
-    ASTNode *node;
-    char *string;
-
-#line 83 "parse.tab.h"
-
-};
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -94,4 +101,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_PARSE_TAB_H_INCLUDED  */
+#endif /* !YY_YY_PARSER_H_INCLUDED  */
