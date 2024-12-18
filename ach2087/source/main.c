@@ -61,7 +61,7 @@ int main(int argc, char * argv[]){
     // Fechando arquivos abertos
 
     // Executando gerador de código assembly
-    system("python gerador_asm.py");
+    system("python3 gerador_asm.py");
     printf("Código binário gerado com sucesso.\n");
     fclose(input);
     return 0;
