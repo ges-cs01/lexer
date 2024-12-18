@@ -1,33 +1,33 @@
-1: VOID   
-1: ID, name = main 
+1: INT  
+1: ID, name = func 
 1: LPAR  
-1: VOID   
+1: INT  
+1: ID, name = x 
 1: RPAR  
 1: LCHA  
 2: INT  
-2: ID, name = i 
+2: ID, name = a 
 2: PV  
-3: ID, name = i 
+3: ID, name = a 
 3: ASSIGN  
-3: NUM, value = 0 
+3: ID, name = x 
 3: PV  
-4: WHILE  
-4: LPAR  
-4: ID, name = i 
-4: LT  
-4: NUM, value = 20 
-4: RPAR  
-4: LCHA  
-5: ID, name = output 
-5: LPAR  
-5: ID, name = i 
-5: RPAR  
-5: PV  
-6: ID, name = i 
-6: ASSIGN  
-6: ID, name = i 
-6: PLUS  
-6: NUM, value = 1 
-6: PV  
-7: RCHA  
-8: RCHA  
+4: RETURN  
+4: ID, name = a 
+4: PV  
+5: RCHA  
+7: INT  
+7: ID, name = main 
+7: LPAR  
+7: VOID   
+7: RPAR  
+7: LCHA  
+8: ID, name = func 
+8: LPAR  
+8: NUM, value = 3 
+8: RPAR  
+8: PV  
+9: RETURN  
+9: NUM, value = 0 
+9: PV  
+10: RCHA  

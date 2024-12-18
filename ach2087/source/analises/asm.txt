@@ -1,18 +1,31 @@
-JUMP 1
-ADDI $sz $sz 1
-ADDI $sz $sp 0
-ADDI $sz $sz 1
-ADDI $zero $t0 0
-SW $sp $t0 1
-LW $sp $t0 1
-ADDI $zero $t1 20
-LESSTHAN $t0 $t1 $t2
-IFF $t2 7
-LW $sp $t0 1
-OUTPUT $t0 $t0 0
-LW $sp $t0 1
-ADDI $zero $t1 1
-PLUS $t0 $t1 $t2
-SW $sp $t2 1
-JUMP 6
+j 12
+sw $sp, $ra, 1
+addi $t0, $t0, 1
+addi $sz, $sz, 1
+addi $sz, $sz, 1
+lw $sp, $t0, 3
+sw $sp, 2($t0)
+lw $sp, $t0, 2
+addi $t0, $RR, 0
+j 10
+lw $sp, $ra, 1
+jr $ra
+addi $t0, $t0, 1
+addi $t0, $sp, 0
+addi $zero, $t0, 3
+sw $sz, $t0, 0
+addi $sz, $sz, 1
+sw $t0, 0($sp), 0
+addi $t0, $sp, 0
+addi $t0, $sz, 1
+sw $sp, $t0, 3
+jal 1
+addi $sp, $sz, 0
+lw $sp, $sp, 0
+subi $sz, $sz, 1
+lw $sz, $t0, 0
+addi $RR, $t0, 0
+addi $zero, $t0, 0
+addi $t0, $RR, 0
+j 30
 HALT

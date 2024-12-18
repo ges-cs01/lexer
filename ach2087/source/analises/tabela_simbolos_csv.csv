@@ -3,13 +3,15 @@ PC_INTERRUPTION,global,inteiro,Função,0,30
 copy_registers_to_ram,global,inteiro,Função,0,30 
 set_hd_track,global,inteiro,Função,0,30 
 copy_registers_to_bank,global,inteiro,Função,0,30 
-main,global,void,Função,0,1 
+main,global,inteiro,Função,0,7 
+func,global,inteiro,Função,0,1 8 
 change_context,global,inteiro,Função,0,30 
 input,global,inteiro,Função,0,30 
 set_lcd_message,global,inteiro,Função,0,30 
 set_process_bcd,global,inteiro,Função,0,30 
-output,global,inteiro,Função,0,30 5 
+output,global,inteiro,Função,0,30 
 STACK_SIZE,global,inteiro,Função,0,30 
 set_quantum_value,global,inteiro,Função,0,30 
 clean_ram,global,inteiro,Função,0,30 
-i,main,inteiro,Variável,0,2 3 4 5 6 6 
+a,func,inteiro,Variável,0,2 3 4 
+x,func,inteiro,Variável,0,1 3 

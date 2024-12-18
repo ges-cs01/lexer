@@ -1,19 +1,18 @@
-  Tipo void
+  Tipo inteiro
+    Funcao func
+      Tipo inteiro
+        Variavel x
+      Tipo inteiro
+        Variavel a
+      Atribuicao
+        Id: a
+        Id: x
+      Return
+        Id: a
+  Tipo inteiro
     Funcao main
       Tipo void
-      Tipo inteiro
-        Variavel i
-      Atribuicao
-        Id: i
+      Chamada de Funcao func 
+        Const: 3
+      Return
         Const: 0
-      While
-        Op:  LT  
-          Id: i
-          Const: 20
-        Chamada de Funcao output 
-          Id: i
-        Atribuicao
-          Id: i
-          Op:  PLUS  
-            Id: i
-            Const: 1

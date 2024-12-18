@@ -49,7 +49,7 @@ int main(int argc, char * argv[]){
     analyze(arvore);
     printf("Análise semântica concluída com sucesso.\n");
 
-    printf("Iniciando código intermediário.\n");
+    //printf("Iniciando código intermediário.\n");
 
     // Encontrando o scopo da função main, apenas as intruções dentro deste escopo
     // devem ser convertidas
@@ -57,12 +57,12 @@ int main(int argc, char * argv[]){
     freopen("analises/codigo_intermediario.txt", "w", stdout);
     codeGen(arvore);
     freopen("/dev/tty", "w", stdout); 
-    printf("Código intermediário gerado com sucesso.\n");
+    //printf("Código intermediário gerado com sucesso.\n");
     // Fechando arquivos abertos
 
     // Executando gerador de código assembly
-    system("python3 gerador_asm.py");
-    printf("Código binário gerado com sucesso.\n");
+    system("python3 gerador32_asm.py");
+    printf("Código gerado com sucesso.\n");
     fclose(input);
     return 0;
 }
