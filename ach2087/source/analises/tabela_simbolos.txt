@@ -7,10 +7,10 @@
 | copy_registers_to_bank | global               | inteiro              | Função             |30 
 | main                 | global               | void                 | Função             |1 
 | change_context       | global               | inteiro              | Função             |30 
-| input                | global               | inteiro              | Função             |30 5 
+| input                | global               | inteiro              | Função             |30 
 | set_lcd_message      | global               | inteiro              | Função             |30 
 | set_process_bcd      | global               | inteiro              | Função             |30 
-| output               | global               | inteiro              | Função             |30 8 
+| output               | global               | inteiro              | Função             |30 5 
 | STACK_SIZE           | global               | inteiro              | Função             |30 
 | set_quantum_value    | global               | inteiro              | Função             |30 
 | clean_ram            | global               | inteiro              | Função             |30 
@@ -19,7 +19,6 @@
 +---------------------+---------------------+---------------------+---------------------+---------------------+
 | Nome                 | Escopo               | Tipo                 | Tipo                 | Ocorrências         | 
 +---------------------+---------------------+---------------------+---------------------+---------------------+
-| i                    | main                 | inteiro              | Variável            |2 4 7 10 
-| n                    | main                 | inteiro              | Variável            |3 5 8 9 9 
+| i                    | main                 | inteiro              | Variável            |2 3 4 5 6 6 
 
 

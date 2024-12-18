@@ -7,42 +7,27 @@
 2: INT  
 2: ID, name = i 
 2: PV  
-3: INT  
-3: ID, name = n 
+3: ID, name = i 
+3: ASSIGN  
+3: NUM, value = 0 
 3: PV  
+4: WHILE  
+4: LPAR  
 4: ID, name = i 
-4: ASSIGN  
-4: NUM, value = 0 
-4: PV  
-5: ID, name = n 
-5: ASSIGN  
-5: ID, name = input 
+4: LT  
+4: NUM, value = 20 
+4: RPAR  
+4: LCHA  
+5: ID, name = output 
 5: LPAR  
+5: ID, name = i 
 5: RPAR  
 5: PV  
-7: WHILE  
-7: LPAR  
-7: ID, name = i 
-7: LT  
-7: NUM, value = 10 
-7: RPAR  
-7: LCHA  
-8: ID, name = output 
-8: LPAR  
-8: ID, name = n 
-8: RPAR  
-8: PV  
-9: ID, name = n 
-9: ASSIGN  
-9: ID, name = n 
-9: MULT  
-9: NUM, value = 2 
-9: PV  
-10: ID, name = i 
-10: ASSIGN  
-10: NUM, value = 1 
-10: PLUS  
-10: NUM, value = 1 
-10: PV  
-11: RCHA  
-13: RCHA  
+6: ID, name = i 
+6: ASSIGN  
+6: ID, name = i 
+6: PLUS  
+6: NUM, value = 1 
+6: PV  
+7: RCHA  
+8: RCHA  
