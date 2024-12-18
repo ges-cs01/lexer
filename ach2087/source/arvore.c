@@ -1,15 +1,11 @@
 #include "globals.h"
 #include "scan.h"
 
-// Variáveis utilizada para imprimir a árvore sintática
-// Utilizada apenas para controlar o nível de identação
 static int indentno = 0;
 #define INDENT indentno+=2
 #define UNINDENT indentno-=2
 
 // Funções para alocação dos nós para árvore sintática
-// Os nós se mantiveram seguindo a estrutura de Quadtrees do Tiny
-
 
 // São utilizados dois tipos de nós para a criação de nós
 // tipo Stmt ou do tipo Exp, mas ambos possuem até três filho e um irmão
@@ -95,11 +91,9 @@ void printOp(FILE *output, int token){
 }
 
 void printTree( TreeNode * tree, FILE *output){
-  
   int i;
   INDENT;
   while (tree != NULL) {
-    
     printSpaces(output);
     //fprintf(output, "-%s-", tree->attr.scope);
     if (tree->nodekind==StmtK)
@@ -165,6 +159,6 @@ void printTree( TreeNode * tree, FILE *output){
 
 void printTreeFile(TreeNode * tree){
   FILE *output = fopen("analises/sintatico.txt", "w");
-  printTree( tree, output);
+  printTree(tree, output);
   fclose(output);
 }
