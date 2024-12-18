@@ -121,6 +121,8 @@ O tratamento de erros no parser é realizado utilizando o **pseudo-não terminal
 
 # Geração de Código na linguagem
 ## Compilação e Execução
+- Dependências: python3, pandas.
+  
 Dentro da pasta source:
 ```
 make
