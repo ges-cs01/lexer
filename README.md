@@ -118,3 +118,13 @@ O tratamento de erros no parser é realizado utilizando o **pseudo-não terminal
 - **Recuperação em Construções Multilinha**:
  - Para construções erradas que abrangem múltiplas linhas, o parser pode reportar a linha onde o erro foi detectado, mas essa linha geralmente será a última linha da construção.
    - Esta abordagem facilita a identificação da posição do erro, ainda que a linha exata possa variar em alguns casos.
+
+# Geração de Código na linguagem
+## Compilação e Execução
+Dentro da pasta source:
+```
+make
+```
+```
+./cminus input.txt
+```
